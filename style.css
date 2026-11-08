@@ -332,3 +332,22 @@ footer{
   .venue-map-section .map-caption{font-size:10px}
   .venue-map-card>a{font-size:12px}
 }
+
+
+/* Mobile fix: let the full invitation details panel grow with its content.
+   The fixed desktop poster ratio was clipping the names and ceremony details. */
+@media(max-width:820px){
+  .details-panel{
+    aspect-ratio:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+  .details-inner{
+    width:100%;
+    max-width:520px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
