@@ -6,7 +6,7 @@
    for(let i=0,n=Math.floor(random(2,6));i<n;i++){
      const p=document.createElement('i');
      p.className='petal';
-     p.style.left=random(1,99)+'vw';
+     p.style.left=random(1,99)+'vw'; 
      p.style.setProperty('--duration',random(8,16)+'s');
      p.style.setProperty('--sway',random(-22,22)+'vw');
      p.style.width=random(8,15)+'px';
