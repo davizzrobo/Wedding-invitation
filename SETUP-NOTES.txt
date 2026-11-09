@@ -1,0 +1,16 @@
+WEDDING INVITATION WEBSITE UPDATE
+
+Files included:
+- index.html (your latest invitation page)
+- style.css (your latest stylesheet)
+- script.js (your latest decorative animation script)
+- memories.html (updated upload + gallery page)
+
+BEFORE PUBLISHING:
+1. In memories.html, replace REPLACE_WITH_YOUR_TURNSTILE_SITE_KEY with the Site Key from Cloudflare Turnstile. Never put the Turnstile Secret Key in this file.
+2. Upload all four website files to the root of your GitHub Pages repository, replacing the matching existing files.
+
+IMPORTANT BACKEND DEPENDENCY:
+Your current Worker supports /upload but does not yet implement /gallery, /gallery/image, or /gallery/download. The gallery UI is prepared to call those routes, but it will show a not-connected message until those Worker routes are added and deployed. Do not announce the gallery as live before testing.
+
+The upload page sends the cf-turnstile-response form field and expects the Worker to validate it.
