@@ -1,69 +1,1100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f0e8">
-<title>Our Memories — Godwin &amp; Felo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f0e8">
+
+<title>Our Memories</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+
 <style>
-.memories-page{min-height:calc(100vh - 110px);padding:38px 18px 72px}.memories-wrap{max-width:1000px;margin:auto}
+.memories-page{min-height:calc(100vh - 110px);padding:38px 18px 72px}
+.memories-wrap{max-width:1000px;margin:auto}
 .memory-hero{text-align:center;position:relative;padding:36px 20px 30px;background:rgba(251,248,242,.78);border:1px solid #e5d9c4;box-shadow:0 15px 40px rgba(77,65,50,.07)}
 .memory-hero:before{content:"";position:absolute;inset:9px;border:1px solid rgba(185,154,85,.36);pointer-events:none}
-.memory-kicker{font-size:10px;letter-spacing:.28em;color:#a28d64;margin:0 0 14px}.memory-title{font-family:"Great Vibes",cursive;font-size:clamp(48px,8vw,78px);font-weight:400;color:var(--purple);line-height:1;margin:0}
-.memory-subtitle{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(15px,2vw,19px);color:#81746b;max-width:600px;line-height:1.6;margin:18px auto 0}.memory-flourish{color:var(--gold);font-size:22px;margin-top:18px}
-.memory-quote{text-align:center;max-width:700px;margin:38px auto 34px;color:#76695e;font-size:clamp(18px,2.5vw,23px);line-height:1.5}.memory-quote span{display:block;font-family:"Playfair Display",serif;font-style:italic;color:var(--purple);font-size:14px;margin-top:8px}
-.upload-panel{max-width:760px;margin:0 auto;background:#fbf8f2;border:1px solid #e4d7c1;padding:28px;box-shadow:0 12px 35px rgba(77,65,50,.06);text-align:center}.upload-icon{width:54px;height:54px;margin:0 auto 12px;border:1px solid #d8c49a;border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:25px}
-.upload-panel h2,.gallery-section h2{font-size:22px;text-transform:none;letter-spacing:0;margin:4px 0 8px}.upload-panel>p{font-size:16px;line-height:1.5;color:#85786d;margin:0 auto 18px;max-width:530px}
-.choose-button,.action-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 22px;background:#f2eadb;border:1px solid #cdb77f;color:#76603a;font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;text-decoration:none}.choose-button:hover,.action-button:hover{background:#eadfc9;transform:translateY(-1px)}
-button:disabled{opacity:.48;cursor:not-allowed;transform:none}#photoInput{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.guest-name-wrap{max-width:590px;margin:0 auto 16px;text-align:left}.guest-name-wrap label{display:block;margin:0 0 7px;color:#76603a;font-size:15px;font-weight:600}.guest-name-wrap input{width:100%;box-sizing:border-box;padding:12px 13px;border:1px solid #d8c9aa;background:#fffdf9;color:#62564a;font:16px "Cormorant Garamond",serif;outline:none}.guest-name-wrap input:focus{border-color:#a88a4b;box-shadow:0 0 0 2px rgba(168,138,75,.13)}
-.drop-zone{max-width:590px;margin:0 auto 16px;padding:26px 18px;border:1.5px dashed #cbb783;background:rgba(246,240,228,.55);transition:background .2s,border-color .2s,transform .2s}.drop-zone.drag-over{background:#efe5d2;border-color:#a88a4b;transform:scale(1.01)}.drop-zone p{margin:0;color:#85786d;font-size:15px;line-height:1.5}.drop-zone strong{color:#76603a}.upload-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.upload-note{font-size:13px!important;color:#a0917d!important;margin:12px auto 0!important}
-.drive-status{margin:20px auto 0;padding:12px 14px;max-width:600px;background:#f5f1e9;border:1px dashed #d7c8a8;color:#88795f;font-size:14px;line-height:1.5}.turnstile-wrap{display:flex;justify-content:center;margin:16px auto 4px;min-height:65px}
-.preview-heading,.gallery-section h2{font-family:"Playfair Display",serif;font-size:22px;font-weight:400;color:var(--purple);text-align:center;margin:40px 0 16px}.preview-grid,.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.preview-card,.gallery-card{background:#fbf8f2;border:1px solid #e4d7c1;padding:8px;box-shadow:0 8px 22px rgba(77,65,50,.06);min-width:0;position:relative}.preview-card img,.gallery-card img{width:100%;height:210px;object-fit:cover;display:block;background:#eee7da}.preview-card p,.gallery-card p{font-size:14px;color:#82766a;overflow-wrap:anywhere;margin:8px 3px 2px}.preview-empty,.gallery-empty{text-align:center;padding:26px 15px;border:1px dashed #d9c9a8;color:#9a8d7b;font-size:16px;background:rgba(251,248,242,.5)}
-.gallery-section{margin-top:48px;padding:28px;background:rgba(251,248,242,.72);border:1px solid #e4d7c1;text-align:center}.gallery-intro{color:#85786d;line-height:1.5}.gallery-toolbar{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:18px 0}.gallery-card{padding:7px;text-align:left}.gallery-card img{cursor:pointer}.gallery-card .photo-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 2px 2px}.gallery-card label{font-size:13px;color:#76603a;display:flex;align-items:center;gap:6px}.gallery-card button{border:1px solid #cdb77f;background:#f2eadb;color:#76603a;padding:6px 9px;cursor:pointer;font:14px "Cormorant Garamond",serif}.gallery-card button:hover{background:#eadfc9}.gallery-card .photo-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lightbox{position:fixed;inset:0;background:rgba(28,23,20,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:22px}.lightbox.open{display:flex}.lightbox img{max-width:min(94vw,1100px);max-height:84vh;object-fit:contain}.lightbox-close{position:absolute;top:15px;right:20px;color:white;background:transparent;border:0;font-size:34px;cursor:pointer}.lightbox-download{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:#f2eadb;color:#76603a;border:1px solid #cdb77f;padding:10px 18px;cursor:pointer;font:16px "Cormorant Garamond",serif}
-.back-home{display:block;text-align:center;margin:32px auto 0;color:#88734a;text-decoration:none;font-size:15px;letter-spacing:.08em}.back-home:hover{text-decoration:underline}
-@media(max-width:650px){.memories-page{padding:22px 12px 48px}.memory-hero{padding:30px 14px 24px}.upload-panel,.gallery-section{padding:23px 16px}.preview-grid,.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.preview-card img,.gallery-card img{height:155px}}
-@media(max-width:380px){.preview-grid,.gallery-grid{grid-template-columns:1fr}.preview-card img,.gallery-card img{height:220px}}
-</style></head>
+.memory-kicker{font-size:10px;letter-spacing:.28em;color:#a28d64;margin:0 0 14px}
+.memory-title{font-family:"Great Vibes",cursive;font-size:clamp(48px,8vw,78px);font-weight:400;color:var(--purple);line-height:1;margin:0}
+.memory-subtitle{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(15px,2vw,19px);color:#81746b;max-width:600px;line-height:1.6;margin:18px auto 0}
+.memory-flourish{color:var(--gold);font-size:22px;margin-top:18px}
+.memory-quote{text-align:center;max-width:700px;margin:38px auto 34px;color:#76695e;font-size:clamp(18px,2.5vw,23px);line-height:1.5}
+.memory-quote span{display:block;font-family:"Playfair Display",serif;font-style:italic;color:var(--purple);font-size:14px;margin-top:8px}
+
+.upload-panel{max-width:760px;margin:0 auto;background:#fbf8f2;border:1px solid #e4d7c1;padding:28px;box-shadow:0 12px 35px rgba(77,65,50,.06);text-align:center}
+.upload-icon{width:54px;height:54px;margin:0 auto 12px;border:1px solid #d8c49a;border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:25px}
+.upload-panel h2,.gallery-section h2{font-size:22px;text-transform:none;letter-spacing:0;margin:4px 0 8px}
+.upload-panel>p{font-size:16px;line-height:1.5;color:#85786d;margin:0 auto 18px;max-width:530px}
+.choose-button,.action-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 22px;background:#f2eadb;border:1px solid #cdb77f;color:#76603a;font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;text-decoration:none}
+.choose-button:hover,.action-button:hover{background:#eadfc9;transform:translateY(-1px)}
+button:disabled{opacity:.48;cursor:not-allowed;transform:none}
+#photoInput{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+.guest-name-wrap{max-width:590px;margin:0 auto 16px;text-align:left}
+.guest-name-wrap label{display:block;margin:0 0 7px;color:#76603a;font-size:15px;font-weight:600}
+.guest-name-wrap input{width:100%;box-sizing:border-box;padding:12px 13px;border:1px solid #d8c9aa;background:#fffdf9;color:#62564a;font:16px "Cormorant Garamond",serif;outline:none}
+.guest-name-wrap input:focus{border-color:#a88a4b;box-shadow:0 0 0 2px rgba(168,138,75,.13)}
+
+.drop-zone{max-width:590px;margin:0 auto 16px;padding:26px 18px;border:1.5px dashed #cbb783;background:rgba(246,240,228,.55);transition:background .2s,border-color .2s,transform .2s;cursor:pointer}
+.drop-zone.drag-over{background:#efe5d2;border-color:#a88a4b;transform:scale(1.01)}
+.drop-zone p{margin:0;color:#85786d;font-size:15px;line-height:1.5}
+.drop-zone strong{color:#76603a}
+.upload-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.upload-note{font-size:13px!important;color:#a0917d!important;margin:12px auto 0!important}
+
+.drive-status{margin:20px auto 0;padding:12px 14px;max-width:600px;background:#f5f1e9;border:1px dashed #d7c8a8;color:#88795f;font-size:14px;line-height:1.5}
+.turnstile-wrap{display:flex;justify-content:center;margin:16px auto 4px;min-height:65px}
+
+.drive-fallback{display:none;max-width:600px;margin:18px auto 0;padding:17px;background:#f5f0e5;border:1px solid #cdb77f;text-align:center}
+.drive-fallback.show{display:block}
+.drive-fallback strong{display:block;color:#76603a;font-family:"Playfair Display",serif;font-size:17px;margin-bottom:7px}
+.drive-fallback p{color:#85786d;font-size:14px;line-height:1.5;margin:0 0 13px}
+.drive-direct-link{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;background:#f2eadb;border:1px solid #cdb77f;color:#76603a;text-decoration:none;font-weight:700;font-family:"Cormorant Garamond",serif;font-size:17px}
+.drive-direct-link:hover{background:#eadfc9}
+
+.preview-heading,.gallery-section h2{font-family:"Playfair Display",serif;font-size:22px;font-weight:400;color:var(--purple);text-align:center;margin:40px 0 16px}
+.preview-grid,.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.preview-card,.gallery-card{background:#fbf8f2;border:1px solid #e4d7c1;padding:8px;box-shadow:0 8px 22px rgba(77,65,50,.06);min-width:0;position:relative}
+.preview-card{border:1px solid #cdb77f;box-shadow:0 0 9px rgba(65,150,90,.17)}
+.preview-grid.over-limit .preview-card{border:2px solid #d83a3a;box-shadow:0 0 12px rgba(220,40,40,.55)}
+.preview-card img,.gallery-card img,.preview-card video,.gallery-card video{width:100%;height:210px;object-fit:cover;display:block;background:#eee7da}
+.preview-card video,.gallery-card video{object-fit:contain}
+.preview-card p,.gallery-card p{font-size:14px;color:#82766a;overflow-wrap:anywhere;margin:8px 3px 2px}
+.file-size{font-size:12px!important;color:#a0917d!important}
+.remove-file{position:absolute;top:13px;right:13px;width:29px;height:29px;border:1px solid #c9a6a0;border-radius:50%;background:rgba(255,250,245,.95);color:#9c3939;font-size:19px;cursor:pointer;z-index:2}
+.file-placeholder{height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#f1eadf;color:#76603a;overflow-wrap:anywhere;padding:10px;box-sizing:border-box}
+.file-placeholder strong{font-size:30px}
+.file-placeholder span{font-size:13px;text-align:center}
+.preview-empty,.gallery-empty{text-align:center;padding:26px 15px;border:1px dashed #d9c9a8;color:#9a8d7b;font-size:16px;background:rgba(251,248,242,.5)}
+
+.gallery-section{margin-top:48px;padding:28px;background:rgba(251,248,242,.72);border:1px solid #e4d7c1;text-align:center}
+.gallery-intro{color:#85786d;line-height:1.5}
+.gallery-toolbar{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:18px 0}
+.gallery-card{padding:7px;text-align:left}
+.gallery-card .photo-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 2px 2px}
+.gallery-card label{font-size:13px;color:#76603a;display:flex;align-items:center;gap:6px}
+.gallery-card button{border:1px solid #cdb77f;background:#f2eadb;color:#76603a;padding:6px 9px;cursor:pointer;font:14px "Cormorant Garamond",serif}
+.gallery-card .photo-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.lightbox{position:fixed;inset:0;background:rgba(28,23,20,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:22px}
+.lightbox.open{display:flex}
+.lightbox img,.lightbox video{max-width:min(94vw,1100px);max-height:84vh;object-fit:contain}
+.lightbox-close{position:absolute;top:15px;right:20px;color:white;background:transparent;border:0;font-size:34px;cursor:pointer}
+.lightbox-download{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:#f2eadb;color:#76603a;border:1px solid #cdb77f;padding:10px 18px;cursor:pointer;font:16px "Cormorant Garamond",serif}
+.back-home{display:block;text-align:center;margin:32px auto 0;color:#88734a;text-decoration:none;font-size:15px;letter-spacing:.08em}
+.back-home:hover{text-decoration:underline}
+
+@media(max-width:650px){
+.memories-page{padding:22px 12px 48px}
+.memory-hero{padding:30px 14px 24px}
+.upload-panel,.gallery-section{padding:23px 16px}
+.preview-grid,.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.preview-card img,.gallery-card img,.preview-card video,.gallery-card video,.file-placeholder{height:155px}
+}
+@media(max-width:380px){
+.preview-grid,.gallery-grid{grid-template-columns:1fr}
+.preview-card img,.gallery-card img,.preview-card video,.gallery-card video,.file-placeholder{height:220px}
+}
+</style>
+</head>
+
 <body>
-<header class="site-header"><a class="monogram" href="index.html">G <span>&amp;</span> F</a><nav class="top-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">HOME <span>⌂</span></a><a class="nav-link" href="index.html#invitation">ABOUT <span>↓</span></a><a class="nav-link" href="index.html#venue-maps">PLACE <span>⌖</span></a></nav></header>
-<main class="memories-page"><div class="memories-wrap">
-<section class="memory-hero"><p class="memory-kicker">GODWIN TITUS &amp; FELO JESFER · 08 JANUARY 2027</p><h1 class="memory-title">Our Memories</h1><p class="memory-subtitle">A little corner for the moments we never want to forget.</p><div class="memory-flourish">— ❀ —</div></section>
-<p class="memory-quote">“Some moments pass in a heartbeat, but the love in them stays with us forever.”<span>Let’s keep those moments close.</span></p>
-<section class="upload-panel" aria-labelledby="uploadTitle"><div class="upload-icon" aria-hidden="true">♡</div><h2 id="uploadTitle">Share a memory</h2><p>Choose your favourite pictures and share them with us. Your photos will be labelled with your name in our wedding album.</p>
-<div class="guest-name-wrap"><label for="guestName">Your name</label><input id="guestName" type="text" maxlength="60" autocomplete="name" placeholder="Enter your name" required></div>
-<div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Drop photos here or browse to choose photos"><div class="upload-icon" aria-hidden="true">⇧</div><p><strong>Drag and drop your photos here</strong></p><p>or choose images from your device</p></div>
-<div class="upload-actions"><label class="choose-button" for="photoInput">＋ Browse photos</label><button id="addMoreButton" class="choose-button" type="button">＋ Add more</button></div>
-<input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" multiple>
-<p class="upload-note">JPG, PNG and WebP only · Up to 5 photos · Maximum 8 MB per photo.</p>
-<div class="turnstile-wrap"><div class="cf-turnstile" data-sitekey="0x4AAAAAAF5nAHyzapfdiYG5" data-theme="light"></div></div>
+
+<header class="site-header">
+<a class="monogram" href="index.html">G <span>&amp;</span> F</a>
+<nav class="top-nav" aria-label="Main navigation">
+<a class="nav-link" href="index.html">HOME <span>⌂</span></a>
+<a class="nav-link" href="index.html#invitation">ABOUT <span>↓</span></a>
+<a class="nav-link" href="index.html#venue-maps">PLACE <span>⌖</span></a>
+</nav>
+</header>
+
+<main class="memories-page">
+<div class="memories-wrap">
+
+<section class="memory-hero">
+<p class="memory-kicker">GODWIN TITUS &amp; FELO JESFER · 08 JANUARY 2027</p>
+<h1 class="memory-title">Our Memories</h1>
+<p class="memory-subtitle">A little corner for the moments we never want to forget.</p>
+<div class="memory-flourish">— ❀ —</div>
+</section>
+
+<p class="memory-quote">
+“Some moments pass in a heartbeat, but the love in them stays with us forever.”
+<span>Let’s keep those moments close.</span>
+</p>
+
+<section class="upload-panel" aria-labelledby="uploadTitle">
+
+<div class="upload-icon" aria-hidden="true">♡</div>
+<h2 id="uploadTitle">Share a memory</h2>
+<p>Choose your favourite pictures and videos and share them with us. Your memories will be labelled with your name in our wedding album.</p>
+
+<div class="guest-name-wrap">
+<label for="guestName">Your name</label>
+<input id="guestName" type="text" maxlength="60" autocomplete="name" placeholder="Enter your name" required>
+</div>
+
+<div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Drop photos and videos here or browse to choose files">
+<div class="upload-icon" aria-hidden="true">⇧</div>
+<p><strong>Drag and drop your photos and videos here</strong></p>
+<p>or choose files from your device</p>
+</div>
+
+<div class="upload-actions">
+<label class="choose-button" for="photoInput">＋ Browse files</label>
+<button id="addMoreButton" class="choose-button" type="button">＋ Add more</button>
+</div>
+
+<input
+id="photoInput"
+type="file"
+accept="image/*,video/*,.heic,.heif,.heic-sequence,.heif-sequence,.avif,.mkv,.avi,.mov,.mp4,.webm,.m4v,.3gp"
+multiple
+hidden
+>
+
+<p class="upload-note">
+Up to 20 photos and 2 videos · Maximum combined size 90 MB.
+</p>
+
+<div class="turnstile-wrap">
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAF5nAHyzapfdiYG5" data-theme="light"></div>
+</div>
+
 <button id="uploadButton" class="choose-button" type="button" style="margin-top:14px" disabled>♡ Upload memories</button>
-<div id="driveStatus" class="drive-status" role="status" aria-live="polite">Select your photos and complete the security check to upload them.</div></section>
-<h2 class="preview-heading">Your selected moments</h2><div id="previewGrid" class="preview-empty" aria-live="polite">Your photo previews will appear here after you choose them. ♡</div>
-<section class="gallery-section" id="all-memories"><h2>All Our Memories</h2><p class="gallery-intro">Shared moments from family and friends, gathered in one place.</p><div class="gallery-toolbar"><button id="refreshGallery" class="action-button" type="button">↻ View Memories</button><button id="downloadSelected" class="action-button" type="button" disabled>↓ Download Selected</button><button id="selectAll" class="action-button" type="button" disabled>Select All</button></div><div id="galleryStatus" class="gallery-empty" aria-live="polite">Click “View Memories” to load the wedding photos.</div><div id="galleryGrid" class="gallery-grid"></div></section>
-<a class="back-home" href="index.html">← BACK TO THE INVITATION</a></div></main>
+
+<div id="driveStatus" class="drive-status" role="status" aria-live="polite">
+Select your photos and videos and complete the security check to upload them.
+</div>
+
+<div id="driveFallback" class="drive-fallback">
+<strong>File too large for this upload</strong>
+<p>
+Your selected files exceed the 90 MB upload limit. You can upload your photos and videos directly to our Google Drive folder instead.
+</p>
+<a
+class="drive-direct-link"
+href="https://drive.google.com/drive/folders/1Xou4mxtRpqoddent5UILPhwR86QX1p0q?usp=drive_link"
+target="_blank"
+rel="noopener noreferrer"
+>↗ Upload directly to Google Drive</a>
+</div>
+
+</section>
+
+<h2 class="preview-heading">Your selected moments</h2>
+<div id="previewGrid" class="preview-empty" aria-live="polite">
+Your photo and video previews will appear here after you choose them. ♡
+</div>
+
+<section class="gallery-section" id="all-memories">
+<h2>All Our Memories</h2>
+<p class="gallery-intro">Shared moments from family and friends, gathered in one place.</p>
+
+<div class="gallery-toolbar">
+<button id="refreshGallery" class="action-button" type="button">↻ View Memories</button>
+<button id="downloadSelected" class="action-button" type="button" disabled>↓ Download Selected</button>
+<button id="selectAll" class="action-button" type="button" disabled>Select All</button>
+</div>
+
+<div id="galleryStatus" class="gallery-empty" aria-live="polite">
+Click “View Memories” to load the wedding photos and videos.
+</div>
+<div id="galleryGrid" class="gallery-grid"></div>
+</section>
+
+<a class="back-home" href="index.html">← BACK TO THE INVITATION</a>
+
+</div>
+</main>
+
 <footer>WITH LOVE AND BLESSINGS <span>✦</span> JANUARY 2027</footer>
-<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview"><button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button><img id="lightboxImage" alt="Wedding memory"><button class="lightbox-download" id="lightboxDownload">↓ Download photo</button></div>
+
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Memory preview">
+<button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+<img id="lightboxImage" alt="Wedding memory" hidden>
+<video id="lightboxVideo" controls playsinline hidden></video>
+<button class="lightbox-download" id="lightboxDownload">↓ Download</button>
+</div>
+
 <script>
-const API='https://wedding-photo-upload-api.weddingmemoriesgf.workers.dev';
-const input=document.getElementById('photoInput'),grid=document.getElementById('previewGrid'),dropZone=document.getElementById('dropZone'),nameInput=document.getElementById('guestName'),uploadButton=document.getElementById('uploadButton'),statusBox=document.getElementById('driveStatus');
-let selectedFiles=[],previewUrls=[],galleryItems=[],lightboxItem=null;
-const allowedTypes=['image/jpeg','image/png','image/webp'];
-function safeName(v){return (v||'').trim().normalize('NFKC').replace(/[^\p{L}\p{N} -]/gu,'').replace(/\s+/g,'_').replace(/_+/g,'_').slice(0,40).replace(/^[_-]+|[_-]+$/g,'')||'Guest'}
-function updateUploadState(){uploadButton.disabled=!(nameInput.value.trim()&&selectedFiles.length>0&&selectedFiles.length<=5)}
-function addFiles(list){const incoming=Array.from(list||[]);for(const f of incoming){if(!allowedTypes.includes(f.type)){statusBox.textContent='Only JPG, PNG and WebP photos are accepted.';continue}if(f.size>8*1024*1024){statusBox.textContent='Each photo must be 8 MB or smaller.';continue}if(selectedFiles.length>=5){statusBox.textContent='You can upload up to 5 photos at a time.';break}selectedFiles.push(f)}renderPreviews()}
-function renderPreviews(){previewUrls.forEach(URL.revokeObjectURL);previewUrls=[];if(!selectedFiles.length){grid.className='preview-empty';grid.textContent='Your photo previews will appear here after you choose them. ♡';updateUploadState();return}grid.className='preview-grid';grid.replaceChildren();selectedFiles.forEach((file,i)=>{const url=URL.createObjectURL(file);previewUrls.push(url);const card=document.createElement('article');card.className='preview-card';const img=document.createElement('img');img.src=url;img.alt='Selected photo preview';const cap=document.createElement('p');cap.textContent=`${safeName(nameInput.value)}_${String(i+1).padStart(2,'0')}.${file.type.split('/')[1].replace('jpeg','jpg')}`;card.append(img,cap);grid.append(card)});updateUploadState()}
-input.addEventListener('change',()=>{addFiles(input.files);input.value=''});nameInput.addEventListener('input',renderPreviews);document.getElementById('addMoreButton').addEventListener('click',()=>input.click());dropZone.addEventListener('click',()=>input.click());dropZone.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();input.click()}});['dragenter','dragover'].forEach(t=>dropZone.addEventListener(t,e=>{e.preventDefault();dropZone.classList.add('drag-over')}));['dragleave','drop'].forEach(t=>dropZone.addEventListener(t,e=>{e.preventDefault();dropZone.classList.remove('drag-over')}));dropZone.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
-uploadButton.addEventListener('click',async()=>{const token=window.turnstile?.getResponse?.();if(!token){statusBox.textContent='Please complete the security verification first.';return}if(!nameInput.value.trim()){statusBox.textContent='Please enter your name.';return}const data=new FormData();data.append('guestName',nameInput.value.trim());data.append('cf-turnstile-response',token);selectedFiles.forEach(f=>data.append('photos',f,f.name));uploadButton.disabled=true;statusBox.textContent='Uploading your photos… please keep this page open.';try{const response=await fetch(API+'/upload',{method:'POST',body:data});const result=await response.json();if(!response.ok)throw new Error(result.error||'Upload failed');statusBox.textContent=`Thank you! ${result.uploaded?.length||selectedFiles.length} photo(s) uploaded successfully.`;selectedFiles=[];renderPreviews();if(window.turnstile)turnstile.reset();loadGallery()}catch(err){statusBox.textContent='Upload failed: '+err.message;if(window.turnstile)turnstile.reset();updateUploadState()}});
-function imageUrl(item){return API+'/gallery/image?id='+encodeURIComponent(item.id)}
-function downloadUrl(item){return API+'/gallery/download?id='+encodeURIComponent(item.id)}
-async function loadGallery(){const box=document.getElementById('galleryStatus'),gallery=document.getElementById('galleryGrid');box.textContent='Loading wedding memories…';gallery.replaceChildren();try{const r=await fetch(API+'/gallery');const data=await r.json();if(!r.ok)throw new Error(data.error||'Could not load gallery');galleryItems=data.files||data.items||[];if(!galleryItems.length){box.textContent='No photos have been uploaded yet. Be the first to share a memory!';return}box.textContent=`${galleryItems.length} beautiful memories`;galleryItems.forEach(item=>{const card=document.createElement('article');card.className='gallery-card';const img=document.createElement('img');img.src=imageUrl(item);img.alt=item.name||'Wedding memory';img.loading='lazy';img.addEventListener('click',()=>openLightbox(item));const actions=document.createElement('div');actions.className='photo-actions';const label=document.createElement('label');const check=document.createElement('input');check.type='checkbox';check.className='gallery-check';check.value=item.id;label.append(check,document.createTextNode(' Select'));const dl=document.createElement('button');dl.type='button';dl.textContent='↓ Download';dl.addEventListener('click',()=>confirmDownload(item));actions.append(label,dl);const caption=document.createElement('p');caption.className='photo-name';caption.textContent=item.name||'Wedding memory';card.append(img,caption,actions);gallery.append(card)});document.getElementById('downloadSelected').disabled=false;document.getElementById('selectAll').disabled=false}catch(err){box.textContent='Gallery is not connected yet: '+err.message+'. The Worker still needs the /gallery, /gallery/image and /gallery/download routes.';document.getElementById('downloadSelected').disabled=true;document.getElementById('selectAll').disabled=true}}
-function confirmDownload(item){if(confirm(`Do you want to download “${item.name||'this photo'}”?`))window.location.href=downloadUrl(item)}
-document.getElementById('refreshGallery').addEventListener('click',loadGallery);document.getElementById('selectAll').addEventListener('click',()=>{document.querySelectorAll('.gallery-check').forEach(c=>c.checked=true)});
-document.getElementById('downloadSelected').addEventListener('click',async()=>{const chosen=Array.from(document.querySelectorAll('.gallery-check:checked')).map(c=>galleryItems.find(x=>x.id===c.value)).filter(Boolean);if(!chosen.length){alert('Select at least one photo first.');return}if(!confirm(`Do you want to download ${chosen.length} selected photo(s) as one ZIP file?`))return;const btn=document.getElementById('downloadSelected');btn.disabled=true;btn.textContent='Preparing ZIP…';try{if(!window.JSZip)throw new Error('ZIP library is still loading. Please try again.');const zip=new JSZip();for(let i=0;i<chosen.length;i++){const res=await fetch(downloadUrl(chosen[i]));if(!res.ok)throw new Error('Could not download '+chosen[i].name);zip.file(chosen[i].name||`memory-${i+1}.jpg`,await res.blob())}const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download='wedding-memories-selected.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}catch(e){alert(e.message)}finally{btn.disabled=false;btn.textContent='↓ Download Selected'}});
-function openLightbox(item){lightboxItem=item;document.getElementById('lightboxImage').src=imageUrl(item);document.getElementById('lightbox').classList.add('open')}function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.getElementById('lightboxImage').src='';lightboxItem=null}document.getElementById('lightboxClose').addEventListener('click',closeLightbox);document.getElementById('lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox')closeLightbox()});document.getElementById('lightboxDownload').addEventListener('click',()=>{if(lightboxItem)confirmDownload(lightboxItem)});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
-window.addEventListener('beforeunload',()=>previewUrls.forEach(URL.revokeObjectURL));
-</script></body></html>
+"use strict";
+
+/* =====================================
+   CONFIGURATION
+===================================== */
+
+const API = "https://wedding-photo-upload-api.weddingmemoriesgf.workers.dev";
+
+const DRIVE_FOLDER =
+"https://drive.google.com/drive/folders/1Xou4mxtRpqoddent5UILPhwR86QX1p0q?usp=drive_link";
+
+const MAX_PHOTOS = 20;
+const MAX_VIDEOS = 2;
+const MAX_TOTAL_SIZE = 90 * 1024 * 1024;
+const MAX_FILE_SIZE = 90 * 1024 * 1024;
+
+const input = document.getElementById("photoInput");
+const grid = document.getElementById("previewGrid");
+const dropZone = document.getElementById("dropZone");
+const nameInput = document.getElementById("guestName");
+const uploadButton = document.getElementById("uploadButton");
+const statusBox = document.getElementById("driveStatus");
+const addMoreButton = document.getElementById("addMoreButton");
+const driveFallback = document.getElementById("driveFallback");
+
+let selectedFiles = [];
+let previewUrls = [];
+let galleryItems = [];
+let lightboxItem = null;
+let uploadQueue = null;
+let uploadBusy = false;
+
+/* =====================================
+   FILE TYPES
+===================================== */
+
+const imageExtensions = [
+"jpg","jpeg","png","webp","heic","heif",
+"heic-sequence","heif-sequence","avif","gif"
+];
+
+const videoExtensions = [
+"mp4","mov","webm","m4v","3gp","avi","mkv"
+];
+
+const mimeByExtension = {
+jpg:"image/jpeg",
+jpeg:"image/jpeg",
+png:"image/png",
+webp:"image/webp",
+heic:"image/heic",
+heif:"image/heif",
+"heic-sequence":"image/heic-sequence",
+"heif-sequence":"image/heif-sequence",
+avif:"image/avif",
+gif:"image/gif",
+mp4:"video/mp4",
+mov:"video/quicktime",
+webm:"video/webm",
+m4v:"video/x-m4v",
+"3gp":"video/3gpp",
+avi:"video/x-msvideo",
+mkv:"video/x-matroska"
+};
+
+function getExtension(filename) {
+const parts = filename.toLowerCase().split(".");
+return parts.length > 1 ? parts.pop() : "";
+}
+
+function getFileType(file) {
+const ext = getExtension(file.name);
+
+if (imageExtensions.includes(ext)) return "photo";
+if (videoExtensions.includes(ext)) return "video";
+if (file.type.startsWith("image/")) return "photo";
+if (file.type.startsWith("video/")) return "video";
+
+return null;
+}
+
+function getMimeType(file) {
+const ext = getExtension(file.name);
+return file.type || mimeByExtension[ext] || "application/octet-stream";
+}
+
+function formatSize(bytes) {
+return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+}
+
+function totalSize() {
+return selectedFiles.reduce((sum,file) => sum + file.size,0);
+}
+
+function photoCount() {
+return selectedFiles.filter(file => getFileType(file) === "photo").length;
+}
+
+function videoCount() {
+return selectedFiles.filter(file => getFileType(file) === "video").length;
+}
+
+function hasOversizedFile() {
+return selectedFiles.some(file => file.size > MAX_FILE_SIZE);
+}
+
+function exceedsLimit() {
+return totalSize() > MAX_TOTAL_SIZE || hasOversizedFile();
+}
+
+function safeName(value) {
+return (value || "")
+.trim()
+.normalize("NFKC")
+.replace(/[^\p{L}\p{N} -]/gu,"")
+.replace(/\s+/g,"_")
+.replace(/_+/g,"_")
+.slice(0,40)
+.replace(/^[_-]+|[_-]+$/g,"") || "Guest";
+}
+
+/* =====================================
+   DRIVE FALLBACK
+===================================== */
+
+function showDriveFallback(show) {
+driveFallback.classList.toggle("show",show);
+}
+
+function updateLimitMessage() {
+if (hasOversizedFile()) {
+statusBox.textContent =
+"One or more files exceed 90 MB. Please upload those files directly to Google Drive using the link below.";
+showDriveFallback(true);
+return;
+}
+
+if (totalSize() > MAX_TOTAL_SIZE) {
+statusBox.textContent =
+"Your combined selection exceeds 90 MB. Please remove some files or upload them directly to Google Drive using the link below.";
+showDriveFallback(true);
+return;
+}
+
+showDriveFallback(false);
+}
+
+/* =====================================
+   UPLOAD BUTTON STATE
+===================================== */
+
+function updateUploadState() {
+const validName = nameInput.value.trim().length > 0;
+const validCount =
+photoCount() <= MAX_PHOTOS &&
+videoCount() <= MAX_VIDEOS;
+
+const validSize = !exceedsLimit();
+const hasFiles = selectedFiles.length > 0;
+
+uploadButton.disabled =
+uploadBusy ||
+!hasFiles ||
+!validName ||
+!validCount ||
+!validSize;
+
+addMoreButton.disabled = uploadBusy || !!uploadQueue;
+input.disabled = uploadBusy || !!uploadQueue;
+}
+
+/* =====================================
+   ADD FILES
+===================================== */
+
+function addFiles(fileList) {
+if (uploadBusy || uploadQueue) {
+statusBox.textContent =
+"Please finish the current upload before changing your selection.";
+return;
+}
+
+const incoming = Array.from(fileList || []);
+let added = 0;
+
+for (const file of incoming) {
+const type = getFileType(file);
+
+if (!type) {
+statusBox.textContent = "Unsupported file: " + file.name;
+continue;
+}
+
+const duplicate = selectedFiles.some(existing =>
+existing.name === file.name &&
+existing.size === file.size &&
+existing.lastModified === file.lastModified
+);
+
+if (duplicate) continue;
+
+if (type === "photo" && photoCount() >= MAX_PHOTOS) {
+statusBox.textContent = "You can select a maximum of 20 photos.";
+continue;
+}
+
+if (type === "video" && videoCount() >= MAX_VIDEOS) {
+statusBox.textContent = "You can select a maximum of 2 videos.";
+continue;
+}
+
+selectedFiles.push(file);
+added++;
+}
+
+if (added > 0) {
+statusBox.textContent =
+`${selectedFiles.length} file(s) selected. Review your files before uploading.`;
+}
+
+renderPreviews();
+updateLimitMessage();
+}
+
+/* =====================================
+   PREVIEWS
+===================================== */
+
+function renderPreviews() {
+previewUrls.forEach(url => URL.revokeObjectURL(url));
+previewUrls = [];
+
+if (!selectedFiles.length) {
+grid.className = "preview-empty";
+grid.textContent =
+"Your photo and video previews will appear here after you choose them. ♡";
+
+showDriveFallback(false);
+updateUploadState();
+return;
+}
+
+grid.className = "preview-grid";
+
+if (exceedsLimit()) {
+grid.classList.add("over-limit");
+}
+
+grid.replaceChildren();
+
+selectedFiles.forEach((file,index) => {
+const type = getFileType(file);
+const ext = getExtension(file.name);
+
+const card = document.createElement("article");
+card.className = "preview-card";
+
+const remove = document.createElement("button");
+remove.type = "button";
+remove.className = "remove-file";
+remove.textContent = "×";
+remove.title = "Remove this file";
+remove.disabled = uploadBusy || !!uploadQueue;
+
+remove.addEventListener("click",() => {
+if (uploadBusy || uploadQueue) return;
+
+selectedFiles.splice(index,1);
+renderPreviews();
+updateLimitMessage();
+});
+
+card.appendChild(remove);
+
+const url = URL.createObjectURL(file);
+previewUrls.push(url);
+
+if (type === "video") {
+const video = document.createElement("video");
+video.src = url;
+video.controls = true;
+video.preload = "metadata";
+video.playsInline = true;
+card.appendChild(video);
+
+} else if (
+["jpg","jpeg","png","webp","gif","avif"].includes(ext)
+) {
+const img = document.createElement("img");
+img.src = url;
+img.alt = file.name;
+card.appendChild(img);
+
+} else {
+const placeholder = document.createElement("div");
+placeholder.className = "file-placeholder";
+
+const symbol = document.createElement("strong");
+symbol.textContent = "♡";
+
+const label = document.createElement("span");
+label.textContent =
+`${ext.toUpperCase()} image · Original file will be uploaded`;
+
+placeholder.append(symbol,label);
+card.appendChild(placeholder);
+}
+
+const caption = document.createElement("p");
+caption.textContent = file.name;
+
+const size = document.createElement("p");
+size.className = "file-size";
+size.textContent =
+`${type === "video" ? "Video" : "Photo"} · ${formatSize(file.size)}`;
+
+card.append(caption,size);
+grid.appendChild(card);
+});
+
+const summary = document.createElement("p");
+summary.className = "file-size";
+summary.textContent =
+`${photoCount()} / ${MAX_PHOTOS} photos · ` +
+`${videoCount()} / ${MAX_VIDEOS} videos · ` +
+`${formatSize(totalSize())} / 90 MB`;
+
+grid.appendChild(summary);
+
+updateUploadState();
+}
+
+/* =====================================
+   INPUT EVENTS
+===================================== */
+
+input.addEventListener("change",() => {
+addFiles(input.files);
+input.value = "";
+});
+
+nameInput.addEventListener("input",() => {
+updateUploadState();
+});
+
+addMoreButton.addEventListener("click",() => {
+if (!uploadQueue && !uploadBusy) input.click();
+});
+
+dropZone.addEventListener("click",() => {
+if (!uploadQueue && !uploadBusy) input.click();
+});
+
+dropZone.addEventListener("keydown",event => {
+if (event.key === "Enter" || event.key === " ") {
+event.preventDefault();
+if (!uploadQueue && !uploadBusy) input.click();
+}
+});
+
+["dragenter","dragover"].forEach(eventName => {
+dropZone.addEventListener(eventName,event => {
+event.preventDefault();
+if (!uploadBusy && !uploadQueue) {
+dropZone.classList.add("drag-over");
+}
+});
+});
+
+["dragleave","drop"].forEach(eventName => {
+dropZone.addEventListener(eventName,event => {
+event.preventDefault();
+dropZone.classList.remove("drag-over");
+});
+});
+
+dropZone.addEventListener("drop",event => {
+if (!uploadBusy && !uploadQueue) {
+addFiles(event.dataTransfer.files);
+}
+});
+
+/* =====================================
+   TURNSTILE
+===================================== */
+
+function getTurnstileToken() {
+if (!window.turnstile) {
+throw new Error("Security verification has not loaded. Refresh the page and try again.");
+}
+
+const token = window.turnstile.getResponse();
+
+if (!token) {
+throw new Error("Please complete the security verification first.");
+}
+
+return token;
+}
+
+/* =====================================
+   START UPLOAD SESSION
+===================================== */
+
+async function startUploadSession() {
+const token = getTurnstileToken();
+
+const manifest = selectedFiles.map(file => ({
+name:file.name,
+type:getMimeType(file),
+size:file.size
+}));
+
+const response = await fetch(API + "/upload/start",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+guestName:nameInput.value.trim(),
+files:manifest,
+turnstileToken:token
+})
+});
+
+const result = await response.json().catch(() => ({}));
+
+if (!response.ok) {
+throw new Error(result.error || "Could not start the upload session.");
+}
+
+const uploadId =
+result.uploadId ||
+result.sessionId ||
+result.id;
+
+if (!uploadId) {
+throw new Error("The server did not return an upload session ID.");
+}
+
+uploadQueue = {
+uploadId,
+files:selectedFiles.map((file,index) => ({
+file,
+index,
+uploaded:false
+}))
+};
+
+return uploadQueue;
+}
+
+/* =====================================
+   UPLOAD ONE FILE
+===================================== */
+
+async function uploadOneFile(queueItem) {
+const file = queueItem.file;
+
+const response = await fetch(API + "/upload/file",{
+method:"POST",
+headers:{
+"X-Upload-ID":uploadQueue.uploadId,
+"X-File-Index":String(queueItem.index),
+"X-File-Name":encodeURIComponent(file.name),
+"X-File-Type":getMimeType(file)
+},
+body:file
+});
+
+const result = await response.json().catch(() => ({}));
+
+if (!response.ok) {
+throw new Error(result.error || `Upload failed for ${file.name}`);
+}
+
+queueItem.uploaded = true;
+}
+
+/* =====================================
+   SEQUENTIAL UPLOAD QUEUE
+===================================== */
+
+async function processUploadQueue() {
+if (uploadBusy) return;
+
+if (!selectedFiles.length) {
+statusBox.textContent = "Please select some files first.";
+return;
+}
+
+if (exceedsLimit()) {
+updateLimitMessage();
+return;
+}
+
+if (!nameInput.value.trim()) {
+statusBox.textContent = "Please enter your name.";
+return;
+}
+
+uploadBusy = true;
+updateUploadState();
+uploadButton.textContent = "Uploading…";
+
+try {
+if (!uploadQueue) {
+await startUploadSession();
+}
+
+const total = uploadQueue.files.length;
+
+for (let i = 0; i < total; i++) {
+const item = uploadQueue.files[i];
+
+if (item.uploaded) continue;
+
+const completed = uploadQueue.files.filter(
+entry => entry.uploaded
+).length;
+
+statusBox.textContent =
+`Uploading ${completed + 1} of ${total}: ${item.file.name}. Please keep this page open.`;
+
+await uploadOneFile(item);
+}
+
+const successfulFiles = uploadQueue.files
+.filter(item => item.uploaded)
+.map(item => item.file);
+
+selectedFiles = selectedFiles.filter(
+file => !successfulFiles.includes(file)
+);
+
+uploadQueue = null;
+
+renderPreviews();
+
+statusBox.textContent =
+`Thank you! ${successfulFiles.length} file(s) uploaded successfully. ♡`;
+
+if (window.turnstile) {
+window.turnstile.reset();
+}
+
+loadGallery();
+
+} catch (error) {
+statusBox.textContent =
+"Upload paused: " + error.message +
+" Your selected files have been kept. Press Retry Upload to continue.";
+
+uploadButton.textContent = "↻ Retry Upload";
+
+} finally {
+uploadBusy = false;
+
+uploadButton.textContent =
+uploadQueue ? "↻ Retry Upload" : "♡ Upload memories";
+
+updateUploadState();
+renderPreviews();
+}
+
+}
+
+uploadButton.addEventListener("click",processUploadQueue);
+
+/* =====================================
+   GALLERY URLS
+===================================== */
+
+function mediaUrl(item) {
+return API + "/gallery/media?id=" + encodeURIComponent(item.id);
+}
+
+function imageUrl(item) {
+return API + "/gallery/image?id=" + encodeURIComponent(item.id);
+}
+
+function downloadUrl(item) {
+return API + "/gallery/download?id=" + encodeURIComponent(item.id);
+}
+
+function isVideoItem(item) {
+const mime = (
+item.mimeType ||
+item.mime_type ||
+item.type ||
+""
+).toLowerCase();
+
+return mime.startsWith("video/") ||
+videoExtensions.includes(getExtension(item.name || ""));
+}
+
+function isImagePreviewSupported(item) {
+const ext = getExtension(item.name || "");
+return ["jpg","jpeg","png","webp","gif","avif"].includes(ext);
+}
+
+/* =====================================
+   LOAD GALLERY
+===================================== */
+
+async function loadGallery() {
+const box = document.getElementById("galleryStatus");
+const gallery = document.getElementById("galleryGrid");
+
+box.textContent = "Loading wedding memories…";
+gallery.replaceChildren();
+
+document.getElementById("downloadSelected").disabled = true;
+document.getElementById("selectAll").disabled = true;
+
+try {
+const response = await fetch(API + "/gallery");
+const data = await response.json();
+
+if (!response.ok) {
+throw new Error(data.error || "Could not load gallery.");
+}
+
+galleryItems = data.files || data.items || [];
+
+if (!galleryItems.length) {
+box.textContent =
+"No memories have been uploaded yet. Be the first to share one!";
+return;
+}
+
+box.textContent = `${galleryItems.length} beautiful memories`;
+
+galleryItems.forEach(item => {
+const card = document.createElement("article");
+card.className = "gallery-card";
+
+const videoItem = isVideoItem(item);
+let media;
+
+if (videoItem) {
+media = document.createElement("video");
+media.src = mediaUrl(item);
+media.controls = true;
+media.preload = "metadata";
+media.playsInline = true;
+
+} else if (isImagePreviewSupported(item)) {
+media = document.createElement("img");
+media.src = imageUrl(item);
+media.alt = item.name || "Wedding memory";
+media.loading = "lazy";
+media.addEventListener("click",() => openLightbox(item));
+
+} else {
+media = document.createElement("div");
+media.className = "file-placeholder";
+
+const symbol = document.createElement("strong");
+symbol.textContent = "♡";
+
+const label = document.createElement("span");
+label.textContent =
+`${getExtension(item.name || "file").toUpperCase()} file · Download to view`;
+
+media.append(symbol,label);
+}
+
+if (videoItem) {
+media.addEventListener("dblclick",() => openLightbox(item));
+}
+
+const actions = document.createElement("div");
+actions.className = "photo-actions";
+
+const label = document.createElement("label");
+const check = document.createElement("input");
+
+check.type = "checkbox";
+check.className = "gallery-check";
+check.value = item.id;
+
+label.append(check,document.createTextNode(" Select"));
+
+const download = document.createElement("button");
+download.type = "button";
+download.textContent = "↓ Download";
+download.addEventListener("click",() => confirmDownload(item));
+
+actions.append(label,download);
+
+const caption = document.createElement("p");
+caption.className = "photo-name";
+caption.textContent = item.name || "Wedding memory";
+
+card.append(media,caption,actions);
+gallery.appendChild(card);
+});
+
+document.getElementById("downloadSelected").disabled = false;
+document.getElementById("selectAll").disabled = false;
+
+} catch (error) {
+box.textContent = "Gallery could not be loaded: " + error.message;
+}
+}
+
+/* =====================================
+   DOWNLOAD
+===================================== */
+
+function confirmDownload(item) {
+if (confirm(`Do you want to download "${item.name || "this memory"}"?`)) {
+window.location.href = downloadUrl(item);
+}
+}
+
+document.getElementById("refreshGallery")
+.addEventListener("click",loadGallery);
+
+document.getElementById("selectAll")
+.addEventListener("click",() => {
+document.querySelectorAll(".gallery-check")
+.forEach(check => check.checked = true);
+});
+
+document.getElementById("downloadSelected")
+.addEventListener("click",async () => {
+const chosen = Array.from(
+document.querySelectorAll(".gallery-check:checked")
+)
+.map(check => galleryItems.find(item => item.id === check.value))
+.filter(Boolean);
+
+if (!chosen.length) {
+alert("Select at least one memory first.");
+return;
+}
+
+if (!confirm(`Download ${chosen.length} selected file(s) as one ZIP file?`)) {
+return;
+}
+
+const button = document.getElementById("downloadSelected");
+button.disabled = true;
+button.textContent = "Preparing ZIP…";
+
+try {
+if (!window.JSZip) {
+throw new Error("ZIP library is still loading. Please try again.");
+}
+
+const zip = new JSZip();
+
+for (let i = 0; i < chosen.length; i++) {
+const item = chosen[i];
+const response = await fetch(downloadUrl(item));
+
+if (!response.ok) {
+throw new Error("Could not download " + item.name);
+}
+
+zip.file(item.name || `memory-${i+1}`,await response.blob());
+}
+
+const blob = await zip.generateAsync({type:"blob"});
+const url = URL.createObjectURL(blob);
+
+const link = document.createElement("a");
+link.href = url;
+link.download = "wedding-memories-selected.zip";
+
+document.body.appendChild(link);
+link.click();
+link.remove();
+
+setTimeout(() => URL.revokeObjectURL(url),3000);
+
+} catch (error) {
+alert(error.message);
+
+} finally {
+button.disabled = false;
+button.textContent = "↓ Download Selected";
+}
+});
+
+/* =====================================
+   LIGHTBOX
+===================================== */
+
+function openLightbox(item) {
+lightboxItem = item;
+
+const lightbox = document.getElementById("lightbox");
+const image = document.getElementById("lightboxImage");
+const video = document.getElementById("lightboxVideo");
+
+image.hidden = true;
+video.hidden = true;
+
+image.src = "";
+video.src = "";
+
+if (isVideoItem(item)) {
+video.src = mediaUrl(item);
+video.hidden = false;
+video.play().catch(() => {});
+} else {
+image.src = imageUrl(item);
+image.hidden = false;
+}
+
+lightbox.classList.add("open");
+}
+
+function closeLightbox() {
+const lightbox = document.getElementById("lightbox");
+const image = document.getElementById("lightboxImage");
+const video = document.getElementById("lightboxVideo");
+
+lightbox.classList.remove("open");
+
+image.src = "";
+video.pause();
+video.src = "";
+
+image.hidden = true;
+video.hidden = true;
+
+lightboxItem = null;
+}
+
+document.getElementById("lightboxClose")
+.addEventListener("click",closeLightbox);
+
+document.getElementById("lightbox")
+.addEventListener("click",event => {
+if (event.target.id === "lightbox") {
+closeLightbox();
+}
+});
+
+document.getElementById("lightboxDownload")
+.addEventListener("click",() => {
+if (lightboxItem) confirmDownload(lightboxItem);
+});
+
+document.addEventListener("keydown",event => {
+if (event.key === "Escape") closeLightbox();
+});
+
+/* =====================================
+   CLEANUP
+===================================== */
+
+window.addEventListener("beforeunload",() => {
+previewUrls.forEach(url => URL.revokeObjectURL(url));
+});
+
+/* =====================================
+   INITIAL STATE
+===================================== */
+
+renderPreviews();
+updateUploadState();
+
+</script>
+
+</body>
+</html>
