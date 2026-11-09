@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wedding Upload Setup</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f1e9;
+      color: #342b26;
+      padding: 30px;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+    button {
+      padding: 13px 20px;
+      margin: 8px 0;
+      border: 0;
+      border-radius: 8px;
+      background: #75533c;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+      margin: 8px 0;
+    }
+    #status { white-space: pre-wrap; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Wedding Photo Upload Setup</h2>
+  <p>Owner-only setup. Do not share this page or its access key.</p>
+
+  <label>Owner setup key</label>
+  <input id="ownerKey" type="password" autocomplete="off"
+         placeholder="Enter OWNER_SETUP_KEY">
+
+  <button id="connect">Connect Google Drive</button>
+  <button id="choose" disabled>Select destination folder</button>
+
+  <p id="status">Waiting for setup.</p>
+
+<script>
+const API = "https://wedding-photo-upload-api.weddingmemoriesgf.workers.dev";
+const CLIENT_ID = "PASTE_YOUR_GOOGLE_CLIENT_ID_HERE";
+const API_KEY = "PASTE_YOUR_GOOGLE_PICKER_API_KEY_HERE";
+const APP_ID = "315917067221";
+
+let pickerReady = false;
+let accessToken = null;
+
+const status = message => {
+  document.getElementById("status").textContent = message;
+};
+
+function ownerHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + document.getElementById("ownerKey").value
+  };
+}
+
+async function post(path) {
+  const response = await fetch(API + path, {
+    method: "POST",
+    headers: ownerHeaders()
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+document.getElementById("connect").onclick = async () => {
+  try {
+    status("Starting Google authorization...");
+    const data = await post("/auth/start");
+    window.location.href = data.authUrl;
+  } catch (error) {
+    status(error.message);
+  }
+};
+
+async function loadPicker() {
+  await new Promise(resolve => gapi.load("picker", resolve));
+  pickerReady = true;
+}
+
+document.getElementById("choose").onclick = async () => {
+  try {
+    if (!document.getElementById("ownerKey").value) {
+      throw new Error("Enter your owner setup key first.");
+    }
+
+    status("Getting Google access...");
+    const data = await post("/owner/access-token");
+    accessToken = data.accessToken;
+
+    if (!pickerReady) await loadPicker();
+
+    const view = new google.picker.DocsView(
+      google.picker.ViewId.FOLDERS
+    );
+    view.setSelectFolderEnabled(true);
+    view.setIncludeFolders(true);
+
+    const picker = new google.picker.PickerBuilder()
+      .addView(view)
+      .setOAuthToken(accessToken)
+      .setDeveloperKey(API_KEY)
+      .setAppId(APP_ID)
+      .setOrigin(window.location.origin)
+      .setCallback(async result => {
+        if (result.action !== google.picker.Action.PICKED) return;
+
+        const folder = result.docs[0];
+        status("Saving folder: " + folder.name);
+
+        try {
+          const response = await fetch(API + "/owner/folder", {
+            method: "POST",
+            headers: ownerHeaders(),
+            body: JSON.stringify({ folderId: folder.id })
+          });
+
+          const saved = await response.json();
+          if (!response.ok) throw new Error(saved.error || "Save failed");
+
+          status("SUCCESS! Destination folder saved: " + saved.folderName);
+        } catch (error) {
+          status(error.message);
+        }
+      })
+      .build();
+
+    picker.setVisible(true);
+  } catch (error) {
+    status(error.message);
+  }
+};
+
+const params = new URLSearchParams(location.search);
+
+if (params.get("connected") === "1") {
+  status("Google Drive connected! Enter your owner setup key and select the destination folder.");
+  document.getElementById("choose").disabled = false;
+}
+
+if (params.get("error")) {
+  status("Authorization error: " + params.get("error"));
+}
+</script>
+</body>
+</html>
